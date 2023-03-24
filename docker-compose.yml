@@ -9,6 +9,7 @@ services:
       - service
       - service_go
     container_name: async_caller
+    command: "composer update"
 
   service:
     build:
