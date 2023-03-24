@@ -1,0 +1,28 @@
+version: "3"
+services:
+  caller:
+    build:
+      context: "docker/cli"
+    volumes:
+      - "./src/caller:/var/www"
+    links:
+      - service
+      - service_go
+    container_name: async_caller
+
+  service:
+    build:
+      context: "docker/fpm"
+    volumes:
+      - "./src/service:/var/www"
+    ports:
+      - "8000:8000"
+    command: "php -S 0.0.0.0:8000"
+    container_name: async_service
+
+  service_go:
+    build:
+      context: "src/service_go"
+    ports:
+      - "3000:3000"
+    container_name: go_service
